@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+	--font-display: "Be Vietnam Pro", sans-serif;
+
+	--color-whiteTheme: #cdd5e0;
+	--color-blackTheme: #111729;
+	--color-slateTheme: #20293a;
+	--color-slateTheme2: #364153;
+	--color-blueTheme: #1d1b48;
+	--color-lightGrayTheme: #97a3b6;
+
+	--breakpoint-xs: 30rem;
+	--breakpoint-2xs: 20rem;
+}
+
+html {
+	@apply font-display text-whiteTheme;
+}
+
+.bg-card {
+	background: linear-gradient(95deg, #111729 3%, #1d1b48 99.61%);
+}
