@@ -23,7 +23,7 @@ export function timeAgo(timestamp: string): string {
 	for (const [unit, seconds] of Object.entries(intervals)) {
 		const value = Math.floor(diffInSeconds / seconds);
 		if (value > 0) {
-			return `${value} ${unit}${value > 1 ? "s" : ""} ago`;
+			return `updated ${value} ${unit}${value > 1 ? "s" : ""} ago`;
 		}
 	}
 
