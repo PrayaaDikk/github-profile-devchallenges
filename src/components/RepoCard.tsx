@@ -1,4 +1,4 @@
-import { formattedNumber } from "../scripts/utils";
+import { formattedNumber, timeAgo } from "../scripts/utils";
 
 interface RepoCardProps {
 	title: string;
@@ -6,6 +6,7 @@ interface RepoCardProps {
 	license?: string;
 	fork_count: number;
 	stargazer_count: number;
+	updated_at: string;
 }
 
 export default function RepoCard({
@@ -14,6 +15,7 @@ export default function RepoCard({
 	license,
 	fork_count,
 	stargazer_count,
+	updated_at,
 }: RepoCardProps) {
 	return (
 		<main className="bg-card px-[1.2em] py-[1.4em] rounded-xl grid grid-cols-1 gap-y-3 shadow-sm hover:shadow-xl duration-300">
@@ -41,6 +43,7 @@ export default function RepoCard({
 					<img src="resources/Star.svg" alt="star-icon" />
 					<p>{formattedNumber(stargazer_count ?? 0)}</p>
 				</div>
+				<p className="text-xs">{timeAgo(updated_at)}</p>
 			</footer>
 		</main>
 	);

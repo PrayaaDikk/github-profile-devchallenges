@@ -21,3 +21,15 @@ html {
 .bg-card {
 	background: linear-gradient(95deg, #111729 3%, #1d1b48 99.61%);
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+	@apply hidden;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	@apply hidden;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	@apply hidden;
+}

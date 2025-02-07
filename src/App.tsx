@@ -20,6 +20,7 @@ type GithubRepo = {
 	license?: { key: string } | null;
 	forks_count: number;
 	stargazers_count: number;
+	updated_at: string;
 };
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
 	const [username, setUsername] = useState<string>("github");
 	const [suggestions, setSuggestions] = useState<GithubUser[]>([]);
 	const [isActive, setIsActive] = useState<boolean>(false);
+	const [viewButtonRepos, setViewButtonRepos] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	// getting user data function
@@ -44,14 +46,18 @@ export default function App() {
 
 	// getting user repositories function
 	async function getRepos(user: string, slice: boolean = false) {
+		setViewButtonRepos(false);
 		try {
 			const res = await fetch(
 				`https://api.github.com/users/${user}/repos`
 			);
 			let data = await res.json();
 
-			if (slice) {
-				data = data.slice(0, 4);
+			if (data.length > 4) {
+				if (slice) {
+					data = data.slice(0, 4);
+				}
+				setViewButtonRepos(true);
 			}
 
 			setRepos(data);
@@ -101,6 +107,9 @@ export default function App() {
 		if (e.key === "Enter" && search.trim()) {
 			setUsername(search.trim());
 			setSuggestions([]);
+			setSearch("");
+			if (inputRef.current) inputRef.current.value = "";
+			setIsActive(false);
 		}
 	}
 
@@ -110,6 +119,7 @@ export default function App() {
 		setSearch("");
 		setSuggestions([]);
 		if (inputRef.current) inputRef.current.value = "";
+		setIsActive(false);
 	}
 
 	return (
@@ -140,7 +150,7 @@ export default function App() {
 
 					{/* display suggestions */}
 					{suggestions.length > 0 && (
-						<ul className="mt-2 p-[0.5em] bg-slateTheme rounded-xl w-full max-w-[500px] mx-auto max-h-[150px] overflow-y-scroll flex flex-col gap-2">
+						<ul className="mt-2 p-[0.5em] bg-slateTheme rounded-xl w-full max-w-[500px] mx-auto max-h-[150px] overflow-y-scroll flex flex-col gap-2 custom-scrollbar">
 							{suggestions.map((suggestion) => (
 								<li
 									className="rounded-xl w-full max-w-[500px] mx-auto bg-blackTheme flex items-center cursor-pointer"
@@ -225,13 +235,16 @@ export default function App() {
 								license={repo.license?.key ?? undefined}
 								fork_count={repo?.forks_count ?? 0}
 								stargazer_count={repo?.stargazers_count ?? 0}
+								updated_at={repo?.updated_at ?? ""}
 							/>
 						))}
 					</main>
 					<footer className="mt-12 w-fit mx-auto">
 						<button
 							type="button"
-							className="cursor-pointer hover:text-lightGrayTheme duration-300"
+							className={`cursor-pointer hover:text-lightGrayTheme duration-300 ${
+								viewButtonRepos ? "" : "hidden"
+							}`}
 							onClick={() => setIsActive(!isActive)}
 						>
 							{isActive ? "Show less" : "View all repositories"}
