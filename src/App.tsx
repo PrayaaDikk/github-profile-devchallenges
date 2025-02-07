@@ -21,6 +21,7 @@ type GithubRepo = {
 	forks_count: number;
 	stargazers_count: number;
 	updated_at: string;
+	html_url: string;
 };
 
 export default function App() {
@@ -236,6 +237,7 @@ export default function App() {
 								fork_count={repo?.forks_count ?? 0}
 								stargazer_count={repo?.stargazers_count ?? 0}
 								updated_at={repo?.updated_at ?? ""}
+								html_url={repo?.html_url ?? ""}
 							/>
 						))}
 					</main>

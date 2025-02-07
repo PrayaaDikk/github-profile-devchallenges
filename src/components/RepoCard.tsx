@@ -7,6 +7,7 @@ interface RepoCardProps {
 	fork_count: number;
 	stargazer_count: number;
 	updated_at: string;
+	html_url: string;
 }
 
 export default function RepoCard({
@@ -16,9 +17,14 @@ export default function RepoCard({
 	fork_count,
 	stargazer_count,
 	updated_at,
+	html_url,
 }: RepoCardProps) {
 	return (
-		<main className="bg-card px-[1.2em] py-[1.4em] rounded-xl grid grid-cols-1 gap-y-3 shadow-sm hover:shadow-xl duration-300">
+		<a
+			href={html_url}
+			target="_blank"
+			className="bg-card px-[1.2em] py-[1.4em] rounded-xl grid grid-cols-1 gap-y-3 shadow-sm hover:shadow-xl duration-300"
+		>
 			<h2>{title}</h2>
 			{description ? (
 				<p className="text-lightGrayTheme">{description}</p>
@@ -45,6 +51,6 @@ export default function RepoCard({
 				</div>
 				<p className="text-xs">{timeAgo(updated_at)}</p>
 			</footer>
-		</main>
+		</a>
 	);
 }
